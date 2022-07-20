@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
@@ -20,47 +20,39 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* Added this scroll view to enable scrolling when list gets longer than the page */}
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1
-        }}
-        keyboardShouldPersistTaps='handled'
-      >
-
+      
       {/* Today's Tasks */}
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Today's tasks</Text>
+      <View style={styles.taskWrapper}>
+        <Text style={styles.secondTitle}>오늘의 할 일</Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
             taskItems.map((item, index) => {
               return (
-                <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
-                  <Task text={item} /> 
+                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                  <Task text={item}/>
                 </TouchableOpacity>
               )
+              
             })
           }
         </View>
       </View>
-        
-      </ScrollView>
-
-      {/* Write a task */}
-      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
-      <KeyboardAvoidingView 
+      
+      {/* Write a Task */}
+      <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}
+        sytle={styles.writeTaskWrapper}
       >
-        <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)} />
-        <TouchableOpacity onPress={() => handleAddTask()}>
+        <TextInput style={styles.input} placeholder={'할 일을 적어주세요'} value={task} onChangeText={text => setTask(text)}/>
+
+        <TouchableOpacity key={index} onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addText}>+</Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-      
+
     </View>
   );
 }
@@ -68,18 +60,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: '#edf6f9',
+    
   },
-  tasksWrapper: {
+  taskWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
+
   },
-  sectionTitle: {
+  secondTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   items: {
-    marginTop: 30,
+    marginTop: 20,
   },
   writeTaskWrapper: {
     position: 'absolute',
@@ -87,26 +81,28 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: '#FFF',
-    borderRadius: 60,
-    borderColor: '#C0C0C0',
+    borderRadius: 15,
+    borderColor: '#c0c0c0',
     borderWidth: 1,
     width: 250,
   },
   addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
+    width: 50,
+    height: 50,
+    backgroundColor: '#006d77',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#C0C0C0',
+    borderColor: '#c0c0c0',
     borderWidth: 1,
   },
-  addText: {},
+  addText: {
+    color: '#fff'
+  },
 });
